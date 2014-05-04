@@ -16,8 +16,6 @@ module.exports = function(grunt) {
     var async   = require('async');
     var done    = this.async();
 
-    grunt.log.writeln('jsjsdoc on files:', this.files);
-
     // Iterate over all specified file groups.
     async.forEach(this.files, function(f, cb){
       var paths = f.src.filter(function(filepath) {
@@ -29,10 +27,7 @@ module.exports = function(grunt) {
           return true;
         }
       });
-      grunt.log.writeln("process:" + paths);
       jsjsdoc.process(paths, {output:undefined}, function(err, docs){
-          grunt.log.writeln("got docs:" + docs);
-          grunt.log.writeln("for dest:" + f.dest);
           grunt.file.write(f.dest, docs);
           grunt.log.writeln('Documentation "' + f.dest + '" created.');
           cb(err);
